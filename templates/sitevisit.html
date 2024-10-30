@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment - Urbanfinds</title>
+    <meta name="description" content="Book a site visit for your preferred property.">
+    <meta name="keywords" content="appointment, site visit, property, booking">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Raleway:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="../static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="../static/assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="../static/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="../static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="../static/assets/css/main.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header id="header" class="header d-flex align-items-center sticky-top">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center">
+            <a href="{{ url_for('index') }}" class="logo d-flex align-items-center me-auto">
+                <h1 class="sitename">Urbanfinds</h1>
+            </a>
+
+            <nav id="navmenu" class="navmenu">
+                <ul></ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+       
+            <a class="btn-getstarted" href="{{ url_for('index') }}">Logout</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Appointment Form Section -->
+        <section class="form my-4 mx-auto" style="max-width: 600px;">
+            <div class="container">
+                <h3 class="text-center mt-4">Owner Details:</h3>
+                <div id="data" class="alert alert-info">
+                    <p>No data available yet.</p>
+                </div>
+
+                <h2 class="text-center my-4">Book an Appointment</h2>
+
+                <form action="{{ url_for('upload_appointment') }}" method="POST" enctype="multipart/form-data">
+                    <div class="form-group mb-3">
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="phone">Phone Number:</label>
+                        <input type="text" class="form-control" id="phone" name="phone" required>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="date">Preferred Appointment Date:</label>
+                        <input type="date" class="form-control" id="date" name="date" required>
+                    </div>
+
+                    <!-- Hidden input to store land_id -->
+                    <input type="hidden" id="land_id_input" name="product_id">
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary me-2">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Retrieve the property data from localStorage when the page loads
+        window.onload = function() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+            // Check if there's any data in the cart
+            if (cart.length > 0) {
+                const dataDiv = document.getElementById('data');
+                dataDiv.innerHTML = '';  // Clear previous content
+    
+                // Display the property details (excluding ID)
+                const propertyInfo = `
+                    <p><strong>Property Type:</strong> ${cart[0].propertyType}</p>
+                    <p><strong>Owner Name:</strong> ${cart[0].ownerName}</p>
+                    <p><strong>Address:</strong> ${cart[0].address}</p>
+                    <p><strong>Price:</strong> ₹${cart[0].price}</p>
+                `;
+                dataDiv.innerHTML = propertyInfo;
+    
+                // Set the property ID in the hidden input field only
+                document.getElementById('land_id_input').value = cart[0].id;
+            } else {
+                // If no data is present, display "No data available"
+                const dataDiv = document.getElementById('data');
+                dataDiv.innerHTML = '<p>No data available yet.</p>';
+            }
+        };
+    </script>
+
+    <!-- Vendor JS Files -->
+    <script src="../static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/assets/vendor/aos/aos.js"></script>
+    <script src="../static/assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="../static/assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Main JS File -->
+    <script src="../static/assets/js/main.js"></script>
+
+</body>
+</html>

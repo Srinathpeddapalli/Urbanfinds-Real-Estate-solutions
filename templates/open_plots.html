@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artworks - Handmade Goods</title>
+    <meta name="description" content="Explore a collection of handmade artworks.">
+    <meta name="keywords" content="handmade art, artworks, artist products">
+
+    <!-- Vendor CSS Files -->
+    <link href="../static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="../static/assets/css/main.css" rel="stylesheet">
+</head>
+
+<body class="art-page">
+
+    <header id="header" class="header d-flex align-items-center sticky-top">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center">
+            <a href="{{ url_for('index') }}" class="logo d-flex align-items-center me-auto">
+                <h1 class="sitename">Urbanfinds</h1>
+            </a>
+
+            <nav id="navmenu" class="navmenu">
+                <ul></ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+            <a class="btn-getstarted" href="{{ url_for('orders') }}">Your Orders</a>
+            <a class="btn-getstarted" href="{{ url_for('index') }}">Logout</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- Artworks Section -->
+        <section class="container mt-5">
+            <h4 class="text-center">Explore Our Open Plots Collection</h4>
+            <div class="row">
+                {% if artworks %}
+                    {% for art in artworks %}
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <img src="{{ url_for('static', filename='uploads/' ~ art['Image']) }}" class="card-img-top" alt="{{ art['PropertyName'] }}" style="height: 300px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ art['PropertyType'] }}</h5>
+                                <p class="card-text">Owner Name: {{ art['OwnerName'] }}</p>
+                                <p class="card-text">Price: ${{ art['Price'] }}</p>
+                                <p class="card-text">Sq Ft: {{ art['Sqft'] }}</p>
+                                <p class="card-text">{{ art['Address'] }}...</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <a class="btn btn-sm btn-outline-secondary"
+                                       href="{{ url_for('sitevisit') }}"
+                                       onclick="addToCart('{{ art['PropertyType'] }}', '{{ art['OwnerName'] }}', '{{ art['Address'] }}', '{{ art['Price'] }}', '{{ art['id'] }}')">
+                                       Book a Site Visit
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12">
+                        <p class="text-center">No open plots found in the collection.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function addToCart(propertyType, ownerName, address, price, id) {
+            // Clear existing cart data
+            localStorage.removeItem('cart');
+        
+            // Add the selected property details to the cart
+            let cart = [{
+                id: id,  // Adding the ID here
+                propertyType: propertyType,
+                ownerName: ownerName,
+                address: address,
+                price: price
+            }];
+        
+            // Save the updated cart back to local storage
+            localStorage.setItem('cart', JSON.stringify(cart));
+        
+            // Redirect to the site visit page
+            window.location.href = "{{ url_for('sitevisit') }}"; // Replace with actual appointment page route
+        }
+    </script>
+    
+
+    <!-- Vendor JS Files -->
+    <script src="../static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

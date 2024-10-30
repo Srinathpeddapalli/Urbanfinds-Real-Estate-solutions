@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urbanfinds</title>
+    <meta name="description" content="Explore various handmade products from artisans.">
+    <meta name="keywords" content="handmade, crafts, art, decor, toys">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Raleway:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="../static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="../static/assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="../static/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="../static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="../static/assets/css/main.css" rel="stylesheet">
+</head>
+
+<body class="courses-page">
+
+    <header id="header" class="header d-flex align-items-center sticky-top">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center">
+            <a href="{{ url_for('index') }}" class="logo d-flex align-items-center me-auto">
+                <h1 class="sitename">Urbanfinds</h1>
+            </a>
+
+            <nav id="navmenu" class="navmenu">
+                <ul></ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+            <a class="btn-getstarted" href="{{ url_for('seller_cart') }}">Your Appointments</a>
+            <a class="btn-getstarted" href="{{ url_for('index') }}">Logout</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- Upload Property Section -->
+        <section class="form my-4 mx-auto" style="max-width: 600px;">
+            <div class="container">
+                <h2 class="text-center my-4">Upload Your Property</h2>
+                <form action="{{ url_for('upload_product') }}" method="POST" enctype="multipart/form-data">
+                    
+                    <!-- Property Name -->
+                    <div class="form-group mb-3">
+                        <label for="Property Name">Property Name:</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter Property name" required>
+                    </div>
+        
+                    <!-- Property Category -->
+                    <div class="form-group mb-3">
+                        <label for="Property Category">Property Category:</label>
+                        <select id="category" name="category" class="form-control" required>
+                            <option value="Open Plots">Open Plots</option>
+                            <option value="Apartments">Apartments</option>
+                            <option value="Villas">Villas</option>
+                        </select>
+                    </div>
+        
+                    <!-- Price -->
+
+                    <div class="form-group mb-3">
+                        <label for="price">Price (in INR):</label>
+                        <input type="number" step="0.01" class="form-control" id="price" name="price" placeholder="Enter price" required>
+                    </div>
+        
+                    <!-- Property Description -->
+                    <div class="form-group mb-3">
+                        <label for="description">Property Address:</label>
+                        <textarea class="form-control" id="description" name="description" placeholder="Describe your Property" rows="4"></textarea>
+                    </div>
+        
+                    <!-- Owner's Name -->
+                    <div class="form-group mb-3">
+                        <label for="Owner's Name">Owner's Name:</label>
+                        <input type="text" class="form-control" id="artist" name="artist" placeholder="Enter Owners's name (optional)">
+                    </div>
+        
+                    <!-- Property(in sq.ft) -->
+                    <div class="form-group mb-3">
+                        <label for="Property(in sq.ft)">Property(in sq.ft):</label>
+                        <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Enter your property size" value="0" required>
+                    </div>
+        
+                    <!-- Upload Property Image -->
+                    <div class="form-group mb-3">
+                        <label for="image">Upload property Image:</label>
+                        <input type="file" class="form-control-file" id="image" name="image" accept="image/*" required>
+                    </div>
+        
+                    <!-- Submit Button -->
+                    <!-- Submit and Cart Buttons Side by Side -->
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary me-2">Submit Property</button>
+                      
+                    </div>
+
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Vendor JS Files -->
+    <script src="../static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/assets/vendor/aos/aos.js"></script>
+    <script src="../static/assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="../static/assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Main JS File -->
+    <script src="../static/assets/js/main.js"></script>
+
+</body>
+
+</html>
